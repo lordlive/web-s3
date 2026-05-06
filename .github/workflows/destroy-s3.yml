@@ -1,0 +1,44 @@
+name: Destroy S3
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:  
+  group: ${{ github.workflow }}-${{ github.ref }}  
+  cancel-in-progress: true
+
+jobs:
+  destroy:
+    name: destroy s3
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Display deployment information
+        run: |
+          echo "=========================================="
+          echo "Destroy S3 bucket"
+          echo "=========================================="
+          echo "Triggered at: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          echo "Workflow ref: ${{ github.ref }}"
+          echo "Workflow ref name: ${{ github.ref_name }}"
+          echo "Triggered by: ${{ github.actor }}"
+          echo "Event name: ${{ github.event_name }}"
+          echo "=========================================="
+          
+      # - name: destroy s3
+      #   env:
+      #     # AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #   run: |
+      #     aws --version
+      #     aws sts get-caller-identity
+      #     aws s3api list-buckets
+      #     echo " Removing S3 "
+      #     aws s3 rm s3://amzn-${{ env.CLOUD_IDENTIFIER }}-s3-github-bucket --recursive
+      #     aws s3api delete-bucket --bucket amzn-${{ env.CLOUD_IDENTIFIER }}-s3-github-bucket
