@@ -35,10 +35,10 @@ jobs:
           echo "Triggered by: ${{ github.actor }}"
           echo "Event name: ${{ github.event_name }}"
           echo "=========================================="
-      - name: Copy resource files
-        run: |
-          aws --version  
-          aws s3 cp ./index.html s3://aws-807291694811-s3-github-bucket/index.html
+      # - name: Copy resource files
+      #   run: |
+      #     aws --version  
+      #     aws s3 cp ./index.html s3://aws-807291694811-s3-github-bucket/index.html
       # - name: deploy s3
       #   env:
       #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
